@@ -1,0 +1,43 @@
+package com.myspace.cib_phase2;
+
+import com.myspace.cib_phase2.modal.CIBGroupInfo;
+
+//from row number: 1
+rule "Row 1 SetAffirmationCount1"
+	ruleflow-group "affirmation1"
+	dialect "mvel"
+	when
+		f1 : CIBGroupInfo( userGroupName == "approval-g1" )
+	then
+	System.out.println("SetAffirmationCount........1")
+		modify( f1 ) {
+				setAffirmationCount( 3 )
+		}
+end
+
+//from row number: 2
+rule "Row 2 SetAffirmationCount1"
+	ruleflow-group "affirmation1"
+	dialect "mvel"
+	when
+		f1 : CIBGroupInfo( userGroupName == "approval-g2" )
+	then
+	System.out.println("SetAffirmationCount........2")
+		modify( f1 ) {
+				setAffirmationCount( 2 )
+		}
+end
+
+//from row number: 3
+rule "Row 3 SetAffirmationCount1"
+	ruleflow-group "affirmation1"
+	dialect "mvel"
+	when
+		f1 : CIBGroupInfo( userGroupName == "approval-g3" )
+	then
+	System.out.println("SetAffirmationCount........3")
+		modify( f1 ) {
+				setAffirmationCount( 1 )
+		}
+end
+
