@@ -1,12 +1,8 @@
 package com.cis.drool_rest.drools;
 
-import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.StringReader;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -21,7 +17,6 @@ import org.kie.api.builder.Results;
 import org.kie.api.runtime.KieContainer;
 import org.kie.api.runtime.KieSession;
 
-import com.cis.drool_rest.models.Customer;
 import com.cis.drool_rest.models.Payload;
 import com.cis.drool_rest.models.QIBGroupInfo;
 import com.cis.drool_rest.utils.TrackingAgendaEventListener;
@@ -29,8 +24,10 @@ import com.cis.drool_rest.utils.TrackingAgendaEventListener;
 public class DroolsTest {
 
 	private static KieContainer kieContainer = null;
-	private static String drlFileLocation = "C:\\Users\\06645\\git\\jbpm-22\\cib-bpm-services\\src\\main\\resources\\template.drl";
+//	private static String drlFileLocation = "C:\\Users\\06645\\git\\jbpm-22\\cib-bpm-services\\src\\main\\resources\\template.drl";
 
+	public static final String drlFile = "template.drl";
+	
 	public static KieSession getKieSession() throws IOException, SQLException, ClassNotFoundException {
 		
 //		 String jdbcUrl ="jdbc:mysql://localhost:3306/mydb";
@@ -60,7 +57,7 @@ public class DroolsTest {
 		 
 //		 		ResultSetGenerator converter = new ResultSetGenerator();
 				ObjectDataCompiler converter = new ObjectDataCompiler();
-		 		FileInputStream fis = new FileInputStream(drlFileLocation);
+		 		InputStream fis = DroolsTest.class.getClassLoader().getResourceAsStream(drlFile) ;
 		 		
 				  String drl2 = converter.compile(qibGroupInfos, 
 						  fis);
