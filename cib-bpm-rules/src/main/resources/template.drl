@@ -1,0 +1,44 @@
+template header
+groupId
+name
+rimNumber
+verifierGroup
+isActive
+entitlementUuid
+affrimationCount
+sequence
+minLimit
+maxLimit
+
+package org.drools.examples.templates;
+
+import com.cis.drool_rest.models.Payload;
+
+global java.util.List approvalList;
+global java.util.List verifierList;
+
+template "loans"
+
+rule "Get approval group from identifier @{row.rowNumber} - rule transactionAmount > @{minLimit}, transactionAmount < @{maxLimit}, entitlementUuid ==  '@{entitlementUuid}', rimNumber == @{rimNumber}"
+lock-on-active
+when
+	cc: Payload(transactionAmount > @{minLimit}, transactionAmount < @{maxLimit}, entitlementUuid ==  "@{entitlementUuid}", rimNumber == @{rimNumber})
+	eval( @{isActive})
+	eval( !@{verifierGroup})
+then
+	System.out.println("group.... @{row.rowNumber}");
+	approvalList.add("@{name}");
+end
+
+rule "Get verifier group from identifier @{row.rowNumber} - rule transactionAmount > @{minLimit}, transactionAmount < @{maxLimit}, entitlementUuid ==  '@{entitlementUuid}', rimNumber == @{rimNumber}"
+lock-on-active
+when
+	cc: Payload(transactionAmount > @{minLimit}, transactionAmount < @{maxLimit}, entitlementUuid ==  "@{entitlementUuid}", rimNumber == @{rimNumber})
+	eval( @{isActive})
+	eval( @{verifierGroup})
+then
+	System.out.println("group.... @{row.rowNumber}");
+	verifierList.add("@{name}");
+end
+
+end template
